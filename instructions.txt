@@ -1,6 +1,13 @@
 
+go to: "https://notebooks.csc.fi/#/dashboard" and at the bottom left click "lauch new" under "Rstudio Server". Log in with your HAKA password. 
+
+run the folling commands on your R console and all necessary files and tutorials will be in the folder "LD_tutorial". 
+
 system("git clone https://github.com/petrikemppainen/LD_tutorial.git")
 setwd("./LD_tutorial/")
+
+Start with file "Simulate_data.R" (in folder "LD_tutorial")
+
 
 
 
