@@ -1,8 +1,5 @@
 #### set up, just run this once  ####
-library(data.table)
-library(parallel)
-library(GenABEL)
-##source("install_packages.R")
+source("install_packages.R") ## this first step takes a long time!! do this in good time prior to tutorial and do not disconnect from internet, otherwise you need to start from scratch.
 source("functions.R")
 
 
