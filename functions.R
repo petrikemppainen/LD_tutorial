@@ -304,9 +304,14 @@ get_LD_sim_data <- function(parameters){
     Dists <- abs(positions[temp[,1]]-positions[temp[,2]])
     Chr <- data.table(chromosomes[temp[,1]], chromosomes[temp[,2]])
     
-    genind <- df2genind(fread(paste0(path_name, '.ped'))[,-c(1:6)], ncode = 1, ploidy = 1)
+    #genind <- df2genind(fread(paste0(path_name, '.ped'))[,-c(1:6)], ncode = 1, ploidy = 1)
+    dt_012 <- apply(tst, 2, function(y){
+      tmp <- strsplit(unique(y), " ")
+      alleles <- unique(unlist(tmp))
+      sapply(strsplit(y, " ") ,function(x) length(which(x %in% alleles[1])))
+    })
     
-    list(LDmat=r2, LD_dist=data.table(dist=Dists, r2=as.numeric(r2_el[,3]))[apply(Chr, 1, function(x) x[1]==x[2]),], pos=positions[loci], genind=genind, gwaa=gwaa_data)
+    list(LDmat=r2, LD_dist=data.table(dist=Dists, r2=as.numeric(r2_el[,3]))[apply(Chr, 1, function(x) x[1]==x[2]),], pos=positions[loci], geotypes = dt_012, gwaa=gwaa_data)
   }else{
     gwaa_data
   }
@@ -396,16 +401,7 @@ getPhenotypicData <- function(data_gwas, nCausal=parameters$nCausal, h=parameter
 }
 
 
-plot_PCA <- function(sim_data){
-  X <- scaleGen(sim_data$genind, NA.method="mean")
-  pca1 <- dudi.pca(X,cent=FALSE,scale=FALSE,scannf=FALSE,nf=3)
-  
-  
-  plot(pca1$li[,1:2], cex=1, pch=20, col=ifelse(find.clusters(sim_data$genind, n.clust =  2, n.pca = 10)$grp==2, 'cornflowerblue', 'gold3'),
-       ylab=paste("Axis 2", paste("(", round(pca1$eig[2]/sum(pca1$eig)*100), " %)", sep="" )), 
-       xlab=paste("Axis 1", paste("(", round(pca1$eig[1]/sum(pca1$eig)*100), " %)", sep="" )),
-       main='Principal component analysis')
-}
+
 
 plot_dist_vs_r2 <- function(sim_data){
   # suppressWarnings(ggplot(sim_data$LD_dist, aes(dist, r2)) +
@@ -733,6 +729,29 @@ option2 <- function(ldna, LDmat, clusters, summary, exl, full.network, include.p
   }
 }
 
+plotPCA <- function(genotypes){
+  autoplot(prcomp(genotypes)) +
+  theme_bw() +
+    #stat_regline_equation(formula = Point~Fst_prim) +
+    theme(aspect.ratio = 0.75,
+          panel.grid.major = element_blank(),
+          panel.grid.minor  = element_blank(),
+          strip.background = element_blank()
+          #strip.text = element_text(hjust = 0),
+          #strip.text.y = element_text(size = 14),
+          #legend.position = "bottom"
+          #strip.text.x = element_blank(),
+          #strip.text.y = element_blank(),
+          #plot.title = element_text(size=8,vjust = 0.5),
+          #plot.title = element_text(hjust = 0.5),
+          #axis.text.x = element_blank(),
+          #axis.text.y = element_blank()
+          #axis.title.y = element_blank(),
+          #axis.title.x = element_blank(),
+          #axis.ticks.x = element_blank(),
+    )
+  
+}
 option2raw <- function(ldna, LDmat, exl, loci, col, full.network, threshold, include.parent, after.merger, cluster.name){
   if(!is.null(exl)){
     LDmat <- LDmat[!(rownames(LDmat) %in% exl),!(rownames(LDmat) %in% exl)]

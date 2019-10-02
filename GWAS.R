@@ -7,12 +7,11 @@ parameters$nCausal <- 5 ## number of causal loci
 parameters$h <- 0.5 ## heritability
 parameters$clustered <- "N" ## wheather oci are randomly distributed or clustered in the genome 
 ## the simulated data
-data_gwas <- sim_data[[5]]
+data_gwas <- sim_data$gwaa
 
 ## get pheotypic data
-Phen <-  getPhenotypicData(sim_data[[5]])
-hist(Phen$weights)
-plot(Phen$weights)
+Phen <-  getPhenotypicData(data_gwas)
+Phen$weights
 data_gwas@phdata$phenotype <-  Phen$phenotype_new
 
 # GWAS and plotting 

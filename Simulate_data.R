@@ -2,11 +2,9 @@
 library(data.table)
 library(parallel)
 library(GenABEL)
-library(ggplot2)
-library(adegenet)
-library(igraph)
-library(ape)
+##source("install_packages.R")
 source("functions.R")
+
 
 ## run simulations from here
 ## choose parameters ##
@@ -20,17 +18,21 @@ parameters <- list(
   subsample = TRUE, # use only nLoci in final data set, do not change if you don't want huge data sets
   nLoci = 500, # number of loci to subsample
   m = NA, # number migrants per generation, NA means no population structure. Assumes two populations in migration drif equilibrium
-  admixture_nGen = NA, # how many generations of adplotLDnetwork(LDmat=sim_data$LDmat, option=1, threshold=0.9mixture?, NA means no admixture. At least one of 'admixture_nGen' or 'm' must be NA
+  admixture_nGen = NA, # how many generations of admixture?, NA means no admixture. At least one of 'admixture_nGen' or 'm' must be NA
   LD = TRUE,
   div_time = 5000 # if admixture_nGen != NA, div_time gives time of divergence. Start with div_time=Ne
 )
 
 ## generate simulated data ##
 sim_data <- get_LD_sim_data(parameters)
+str(sim_data)
+
+genotypes <- sim_data$geotypes
+
 
 par(mfcol=c(2,2))
 ## look at population structure with Principal component analyses, tries to find two clusters ##
-#plot_PCA(sim_data)
+plotPCA(sim_data$geotypes)
 ## plot LD vs physical distance, recombination rate is uniform so scales directly with cM ##
 plot_dist_vs_r2(sim_data)
 
