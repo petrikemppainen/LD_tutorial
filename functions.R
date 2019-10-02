@@ -304,7 +304,7 @@ get_LD_sim_data <- function(parameters){
     Dists <- abs(positions[temp[,1]]-positions[temp[,2]])
     Chr <- data.table(chromosomes[temp[,1]], chromosomes[temp[,2]])
     
-    #genind <- df2genind(fread(paste0(path_name, '.ped'))[,-c(1:6)], ncode = 1, ploidy = 1)
+    tst <- fread(paste0(path_name, '.ped'))[,-c(1:6)]
     dt_012 <- apply(tst, 2, function(y){
       tmp <- strsplit(unique(y), " ")
       alleles <- unique(unlist(tmp))

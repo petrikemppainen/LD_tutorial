@@ -25,14 +25,13 @@ parameters <- list(
 
 ## generate simulated data ##
 sim_data <- get_LD_sim_data(parameters)
-str(sim_data)
 
-genotypes <- sim_data$geotypes
 
+plotPCA(sim_data$geotypes)
 
 par(mfcol=c(2,2))
 ## look at population structure with Principal component analyses, tries to find two clusters ##
-plotPCA(sim_data$geotypes)
+
 ## plot LD vs physical distance, recombination rate is uniform so scales directly with cM ##
 plot_dist_vs_r2(sim_data)
 

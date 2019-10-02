@@ -1,3 +1,3 @@
- 483 polymorphic positions on chromosome 1
- 468 polymorphic positions on chromosome 2
- 490 polymorphic positions on chromosome 3
+ 471 polymorphic positions on chromosome 1
+ 479 polymorphic positions on chromosome 2
+ 470 polymorphic positions on chromosome 3
