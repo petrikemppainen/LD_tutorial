@@ -28,6 +28,7 @@ Below we will look at how different settings change the LD patterns in the data.
 
 ################# GWAS/QTL #####################
  - Use the below parameters to simulate data. This simulates a human genome.
+
 parameters <- list(
   folder = "LD_sim", # files are saved to this folder, change if you want to but not necessary, files will be overwritten, with a warning that you can ignore
   Ne = 2000, # effective population size
