@@ -1,3 +1,13 @@
+library(genetics)
+library(data.table)
+library(genetics)
+library(data.table)
+library(ggplot2)
+library(ggfortify)
+library(igraph)
+library(ape)
+library(GenABEL)
+
 sortmap.internal <- function (chrom, map, delta = 1) 
 {
   chnum <- chrom.char2num(chrom)

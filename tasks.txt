@@ -30,49 +30,44 @@ Below we will look at how different settings change the LD patterns in the data.
  - Use the below parameters to simulate data. This simulates a human genome.
 
 parameters <- list(
-  folder = "LD_sim", # files are saved to this folder, change if you want to but not necessary, files will be overwritten, with a warning that you can ignore
-  Ne = 2000, # effective population size
-  r = 0.0001, # recombination rate
-  sampleSize = 500, # number of haploid genomes to simulate
+  folder = "LD_sim", 
+  Ne = 2000, 
+  r = 0.0001, 
+  sampleSize = 500,
   chrom_sizes = human, # chromosome number and size distribution as in the human genome
-  maf = 0.05, # minor allele frequency for main data set
-  subsample = TRUE, # use only nLoci in final data set, do not change if you don't want huge data sets
-  nLoci = 500, # number of loci to subsample
-  m = NA, # number migrants per generation, NA means no population structure. Assumes two populations in migration drif equilibrium
-  admixture_nGen = NA, # how many generations of adplotLDnetwork(LDmat=sim_data$LDmat, option=1, threshold=0.9mixture?, NA means no admixture. At least one of 'admixture_nGen' or 'm' must be NA
+  maf = 0.05, 
+  subsample = TRUE, 
+  nLoci = 500,
+  m = NA,
+  admixture_nGen = NA, 
   LD = TRUE,
-  div_time = 5000 # if admixture_nGen != NA, div_time gives time of divergence. Start with div_time=Ne
+  div_time = 5000
 )
+
+## mutation rates and recombination rates are adjusted to get enough segregating loci and recombination rate is 10 times the mutation rate
 parameters$u <- ((4*parameters$nLoci/(2*parameters$Ne))/sum(1/(1:(parameters$sampleSize))))/sum(parameters$chrom_sizes)
 parameters$r <- parameters$u*10
+
+sim_data <- get_LD_sim_data(parameters)
 
  - now run code in "GWAS.R"
  
 
-11. You started with 5 causal loci with h2=0.5. The P-value is P2df. Does the GWAS find all causal loci?. What is an easy way to correct for multiple testing? Does it find any other significant loci in addition to the causal loci?
-12. What are the observed and expected P-value distributions. What is the expectation for the P-value distribution when there are no causal loci? Test this by setting h2=0 and repeating the analyses (starting from simulation of phenotypes) 
-13. Is there any P-value inflation??
+11. You started with 5 causal loci with h2=0.5. The P-value is P1df. Does the GWAS find all causal loci?. What is an easy way to correct for multiple testing? Do you find any other significant loci in addition to the causal loci?
+
+12. What are the observed and expected P-value distributions. What is the expectation for the P-value distribution when there are no causal loci? You can test this by setting h2=0 and repeating the analyses (starting from simulation of phenotypes) 
+
+13. Is there any P-value inflation?
 
 14. How do your results change if you use "parameters$r <- parameters$u" instead for the simulated data?
-15. How abouit if you use "m <- 2" (again use r = 10*u)
-17. How do you solve this problem?? 
+
+15. How about if you use "m <- 2" (again use r = 10*u)?
+
+17. In what two ways can you correct for P-value inflation?
 
 ### QTL ###
 18. Now repeat the analyses above, but you want to simulate a data set that mimics an F2 intercross. How would you do that? 
 19. Once you have managed 18, how do the results differ from above?
 
-20. So what is actual difference between GWAS and QTL mapping?
-
-
-
-
-
-
-
-
-
-
-
-
-
+20. So what is the actual difference between GWAS and QTL mapping?
 
